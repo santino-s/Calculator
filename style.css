@@ -1,0 +1,123 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(112, 189, 227);
+}
+
+.display-number {
+    grid-area: display;
+    margin-left: 20px;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+
+ 
+}
+
+.back-btn {
+    grid-area: back;
+}
+
+.ac-btn {
+    grid-area: ac;
+}
+
+.percent-btn {
+    grid-area: percent;
+    background-color: red;
+}
+
+.divide-btn {
+    grid-area: divide;
+}
+
+.seven-btn {
+    grid-area: seven;
+}
+
+.eight-btn {
+    grid-area: eight;
+}
+
+.nine-btn {
+    grid-area: nine;
+}
+
+.times-btn {
+    grid-area: time;
+}
+
+.four-btn {
+    grid-area: four;
+}
+
+.five-btn {
+    grid-area: five;
+}
+
+.six-btn {
+    grid-area: six;
+}
+
+.minus-btn {
+    grid-area: minus;
+}
+
+.one-btn {
+    grid-area: one;
+}
+
+.two-btn {
+    grid-area: two;
+}
+
+.three-btn {
+    grid-area: three;
+}
+
+.plus-btn {
+    grid-area: plus;
+}
+
+.negative-btn {
+    grid-area: negative;
+    background-color: red;
+}
+
+.zero-btn {
+    grid-area: zeros;
+}
+
+.period-btn {
+    grid-area: period;
+}
+
+.equals-btn {
+    grid-area: equals;
+}
+
+
+.container {
+    display: grid;
+    gap: 12px;
+    grid-template-areas: 
+    'none none none display'
+    'back ac percent divide'
+    'seven eight nine time'
+    'four five six minus'
+    'one two three plus'
+    'negative zeros period equals';
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
