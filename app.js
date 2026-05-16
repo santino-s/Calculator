@@ -18,13 +18,19 @@ let displayCharacters = "";
 for (let i = 0; i < numbersMath.length; i++) {
     numbersMath[i].addEventListener("click", function() {
 
-        if (displayCharacters[0] === "0") {
-            displayCharacters = "";
+        // PREVENT LEADING ZEROS IF ZERO IS PRESSED NUMEROUS TIMES
+        if (displayCharacters === "0" && numbersMath[i].textContent === "0") {
+            return;
+        } 
+        
+        // IF DISPLAY JUST HAS SINGLE ZERO, REPLACE IT INSTEAD OF APPENDING
+        if (displayCharacters === "0") {
+            displayCharacters = numbersMath[i].textContent;
         } else {
             displayCharacters += numbersMath[i].textContent;
-        
-            display.textContent = displayCharacters;
         }
+
+        display.textContent = displayCharacters
     });
 };
 
@@ -60,7 +66,7 @@ ac.addEventListener("click", function() {
 // EVENT LISTNER FOR BACK BUTTON
 backBtn.addEventListener("click", function(){
     if (display.textContent != "0") {
-        displayCharacters = displayCharacters.slice(0, displayCharacters.length - 1);
+        displayCharacters = displayCharacters.slice(0, -1);
         display.textContent = displayCharacters;
     };
 
@@ -71,24 +77,31 @@ backBtn.addEventListener("click", function(){
 
 // EVENT LISTENER FOR EQUALS BUTTON
 equals.addEventListener("click", function(){
+    let result = 0;
 
    if (displayCharacters.includes("+")) {
         let plus = displayCharacters.indexOf("+");
         let afterPlus = plus + 1;
-        display.textContent = mathPlus(parseFloat(displayCharacters.slice(0,plus)), parseFloat(displayCharacters.slice(afterPlus)));
+        result = mathPlus(parseFloat(displayCharacters.slice(0,plus)), parseFloat(displayCharacters.slice(afterPlus)));
    } else if (displayCharacters.includes("-")) {
         let minus = displayCharacters.indexOf("-");
         let afterminus = minus + 1;
-        display.textContent = mathMinus(parseFloat(displayCharacters.slice(0,minus)), parseFloat(displayCharacters.slice(afterminus)));
+        result = mathMinus(parseFloat(displayCharacters.slice(0,minus)), parseFloat(displayCharacters.slice(afterminus)));
    } else if (displayCharacters.includes("×")) {
         let multiply = displayCharacters.indexOf("×");
         let afterMultiply = multiply + 1;
-        display.textContent = mathMultiply(parseFloat(displayCharacters.slice(0,multiply)), parseFloat(displayCharacters.slice(afterMultiply)));
+        result = mathMultiply(parseFloat(displayCharacters.slice(0,multiply)), parseFloat(displayCharacters.slice(afterMultiply)));
    } else if (displayCharacters.includes("÷")) {
         let divide = displayCharacters.indexOf("÷");
         let afterDivide = divide + 1;
-        display.textContent = mathDivide(parseFloat(displayCharacters.slice(0,divide)), parseFloat(displayCharacters.slice(afterDivide)));
-   } 
+        result = mathDivide(parseFloat(displayCharacters.slice(0,divide)), parseFloat(displayCharacters.slice(afterDivide)));
+   } else {
+        return;
+   }
+
+   // UPDATE DISPLAY TO ANSWER SO USER CAN KEEP CALCULATING 
+   display.textContent = result;
+   displayCharacters = result.toString();
     
 });
 
