@@ -4,6 +4,7 @@ A simple browser-based calculator that performs basic arithmetic operations on t
 
 ## Features
 - Addition, subtraction, multiplication, and division
+- A Fahrenheit button to convert Celsius to Fahrenheit (0 in the calculator will change to 32 once the button is pressed)
 - Backspace and clear functionality
 - Decimal number support
 - Clean, responsive UI
