@@ -23,9 +23,8 @@ body {
     grid-area: ac;
 }
 
-.percent-btn {
+.FC-btn {
     grid-area: percent;
-    background-color: red;
 }
 
 .divide-btn {
@@ -82,7 +81,6 @@ body {
 
 .negative-btn {
     grid-area: negative;
-    background-color: red;
 }
 
 .zero-btn {

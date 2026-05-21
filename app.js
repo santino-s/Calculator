@@ -1,6 +1,5 @@
 // SELECT BUTTONS (NUMBERS / ARITHMETIC OPERATORS / EQUALS SIGN)
 const numbersMath = document.querySelectorAll('.number-math');
-// const math = document.querySelectorAll('.math');
 const equals = document.querySelector('.equals');
 
 // SELECT DISPLAY
@@ -9,6 +8,12 @@ const display = document.querySelector('.display-number');
 // SELECT AC / BACK
 const ac = document.querySelector('.ac-btn');
 const backBtn = document.querySelector('.back-btn');
+
+// // SELECT NEGATIVE / POSITIVE BUTTON
+const negative = document.querySelector(".negative-btn");
+
+// SELECT FC BTN
+const fahrenheitToCelsius = document.querySelector(".FC-btn");
 
 // VARIABLE TO HOLD CHARACTERS IN THE DISPLAY
 let displayCharacters = "";
@@ -21,18 +26,42 @@ for (let i = 0; i < numbersMath.length; i++) {
         // PREVENT LEADING ZEROS IF ZERO IS PRESSED NUMEROUS TIMES
         if (displayCharacters === "0" && numbersMath[i].textContent === "0") {
             return;
-        } 
+        }; 
         
         // IF DISPLAY JUST HAS SINGLE ZERO, REPLACE IT INSTEAD OF APPENDING
         if (displayCharacters === "0") {
             displayCharacters = numbersMath[i].textContent;
         } else {
             displayCharacters += numbersMath[i].textContent;
-        }
+        };
 
-        display.textContent = displayCharacters
+        display.textContent = displayCharacters;
+
     });
 };
+
+
+// EVENT LISTENER FOR CELSIUS TO FAHRENHEIT
+fahrenheitToCelsius.addEventListener("click", function(){
+    let converter = Number(displayCharacters) * 1.8 + 32;
+    let finalConverter = converter + "℉"
+    display.textContent = finalConverter;
+})
+
+
+// EVENT LISTENER FOR NEGATIVE BTN
+negative.addEventListener("click", function(){
+    if (displayCharacters.includes(")")) {
+        displayCharacters = displayCharacters.replace("(", "");
+        displayCharacters = displayCharacters.replace(")", "");
+        displayCharacters = negativePositive(displayCharacters);
+        display.textContent = displayCharacters;
+    } else {
+        display.textContent = negativePositive(displayCharacters);
+        displayCharacters = "";
+        displayCharacters += display.textContent;
+    };
+});
 
 
 // FUNCTION FOR ADDITION
@@ -54,6 +83,17 @@ function mathMultiply (num1, num2) {
 function mathDivide (num1, num2) {
         return num1 / num2;
     };
+
+// FUNCTION FOR NEGATIVE OR POSITIVE
+function negativePositive (num) {
+    if (displayCharacters.includes("-")) {
+        let negMath = num * -1;
+        return negMath.toString();
+    } else {
+        let negMath = `(${num * -1})`;
+        return negMath.toString();   
+    };
+};
 
 
 
@@ -80,21 +120,42 @@ equals.addEventListener("click", function(){
     let result = 0;
 
    if (displayCharacters.includes("+")) {
+        if (displayCharacters.includes("(") && displayCharacters.includes(")")) {
+            displayCharacters = displayCharacters.replace("(", "");
+            displayCharacters = displayCharacters.replace(")", "");
+        }; 
         let plus = displayCharacters.indexOf("+");
         let afterPlus = plus + 1;
         result = mathPlus(parseFloat(displayCharacters.slice(0,plus)), parseFloat(displayCharacters.slice(afterPlus)));
-   } else if (displayCharacters.includes("-")) {
-        let minus = displayCharacters.indexOf("-");
-        let afterminus = minus + 1;
-        result = mathMinus(parseFloat(displayCharacters.slice(0,minus)), parseFloat(displayCharacters.slice(afterminus)));
    } else if (displayCharacters.includes("×")) {
+        if (displayCharacters.includes("(") && displayCharacters.includes(")")) {
+            displayCharacters = displayCharacters.replace("(", "");
+            displayCharacters = displayCharacters.replace(")", "");
+        };
         let multiply = displayCharacters.indexOf("×");
         let afterMultiply = multiply + 1;
         result = mathMultiply(parseFloat(displayCharacters.slice(0,multiply)), parseFloat(displayCharacters.slice(afterMultiply)));
    } else if (displayCharacters.includes("÷")) {
+        if (displayCharacters.includes("(") && displayCharacters.includes(")")) {
+            displayCharacters = displayCharacters.replace("(", "");
+            displayCharacters = displayCharacters.replace(")", "");
+        };
         let divide = displayCharacters.indexOf("÷");
         let afterDivide = divide + 1;
         result = mathDivide(parseFloat(displayCharacters.slice(0,divide)), parseFloat(displayCharacters.slice(afterDivide)));
+   } else if (displayCharacters.includes("-")) {
+        if (displayCharacters.includes("(") || displayCharacters.indexOf("-") !== displayCharacters.lastIndexOf("-")) {
+            displayCharacters = displayCharacters.replace("(", "");
+            displayCharacters = displayCharacters.replace(")", "");
+            let minus = displayCharacters.indexOf("-");
+            let secondMinus = displayCharacters.indexOf("-", minus + 1);
+            let afterminus = secondMinus + 1;
+            result = mathMinus(parseFloat(displayCharacters.slice(0,secondMinus)), parseFloat(displayCharacters.slice(afterminus)));
+        } else {
+            let minus = displayCharacters.indexOf("-");
+            let afterMinus = minus + 1;
+            result = mathMinus(parseFloat(displayCharacters.slice(0,minus)), parseFloat(displayCharacters.slice(afterMinus)));
+        }
    } else {
         return;
    }
@@ -104,4 +165,3 @@ equals.addEventListener("click", function(){
    displayCharacters = result.toString();
     
 });
-
